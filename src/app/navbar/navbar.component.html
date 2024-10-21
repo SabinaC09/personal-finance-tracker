@@ -1,0 +1,17 @@
+<mat-drawer-container class="container full-screen-container" autosize>
+    <mat-drawer #drawer class="sidenav full-height-sidenav" mode="side">
+        <mat-list role="list">
+            <mat-list-item role="listitem">Login/Sign up</mat-list-item>
+            <mat-list-item role="listitem">Settings</mat-list-item>
+            <mat-list-item role="listitem">Change theme</mat-list-item>
+          </mat-list>
+    </mat-drawer>
+  
+    <div class="sidenav-content full-height-content">
+      <button type="button" mat-button (click)="drawer.toggle()" style="margin-left: 0px">
+        Toggle sidenav
+      </button>
+      <router-outlet></router-outlet>
+    </div>
+  
+  </mat-drawer-container>

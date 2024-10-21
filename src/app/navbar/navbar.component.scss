@@ -1,0 +1,24 @@
+.container {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+  
+  .sidenav {
+    padding: 20px;
+  }
+
+  .full-screen-container {
+    height: 100vh; /* Full height of the viewport */
+    width: 100vw;  /* Full width of the viewport */
+  }
+  
+  /* Make the sidenav and content take up full height */
+  .full-height-sidenav, .full-height-content {
+    height: 100%;
+  }
+  
