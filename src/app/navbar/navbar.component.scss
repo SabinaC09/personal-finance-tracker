@@ -7,10 +7,6 @@
     height: 100%;
     align-items: center;
   }
-  
-  .sidenav {
-    padding: 20px;
-  }
 
   .full-screen-container {
     height: 100vh; /* Full height of the viewport */
@@ -20,5 +16,16 @@
   /* Make the sidenav and content take up full height */
   .full-height-sidenav, .full-height-content {
     height: 100%;
+  }
+
+  .menu-button {
+    align-self: flex-start;
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
   

@@ -1,1 +1,34 @@
-<p>expense-list works!</p>
+<div class="expense-container">
+    <h1 style="color: rgb(166, 30, 125); margin-top: 200px; flex-grow: 2;" >Expenses</h1>
+    <button mat-raised-button aria-label="Add expense" style="flex-basis: 25%;margin-top: 200px;">
+        Add expense
+    </button>
+    
+    <form>
+        <mat-form-field style="flex-basis: 90%">
+            <mat-label>Search</mat-label>
+            <mat-icon matSuffix>search</mat-icon>
+            <input type="text" placeholder="Search by description" matInput [formControl]="myControl"
+                [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                @for (option of filteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <button mat-raised-button aria-label="Filter by" >
+        Filter by
+    </button>
+
+    <div class="expense-list" style="flex-basis: 90%">
+        <mat-card *ngFor="let expense of expenses" class="expense-card">
+            <mat-card-title>{{ expense.description }}</mat-card-title>
+            <mat-card-subtitle>{{ expense.date | date:'longDate' }}</mat-card-subtitle>
+            <mat-card-content>
+                <p>Category: {{ expense.category }}</p>
+                <p>Amount: {{ expense.amount | currency:'RON' }}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

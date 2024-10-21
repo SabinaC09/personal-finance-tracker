@@ -1,5 +1,40 @@
 <div class="container">
-    <app-expense-card></app-expense-card>
-    <app-income-card></app-income-card>
-    <app-budget></app-budget>
+    <mat-card appearance="outlined" class="card-spacing" style="flex-basis: 30%">
+        <mat-card-header>
+          <mat-card-title>Current Balance</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style='font-size: 40px'>
+            <div class="balance-amount">3200 RON</div>
+          </mat-card-content>
+      </mat-card>
+
+    <app-expense-card style="flex-basis: 30%" class ="card-spacing"></app-expense-card>
+    <app-budget style="flex-basis: 30%"></app-budget>
+    <app-latest-tranzactions-card style="flex-basis: 90%"></app-latest-tranzactions-card>
+
+    <mat-card appearance="outlined" style="flex-basis: 30%" class="card-spacing">
+        <mat-card-header>
+          <mat-card-title>Budgetting tips <mat-icon>wb_incandescent</mat-icon></mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="tips">The 50/30/20 rule. 50% for house (groceries, utilities, transport) 30% for wants(streaming platforms, shopping) and 20% for financial goals (savings)</div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button>Learn More</button>
+          </mat-card-actions>
+      </mat-card>
+
+    <app-income-card style="flex-basis: 30%" class="card-spacing"></app-income-card>
+
+    <mat-card appearance="outlined" class="card-spacing" style="flex-basis: 30%">
+        <mat-card-header>
+          <mat-card-title>Savings</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style='font-size: 40px'>
+            <div class="balance-amount">20500 RON</div>
+          </mat-card-content>
+      </mat-card>
 </div>
+
+<!-- https://www.angularjswiki.com/angular/angular-material-icons-list-mat-icon-list/ -->
+<!-- https://fonts.google.com/icons?icon.set=Material+Icons&icon.style=Filled&selected=Material+Icons:emoji_objects:&icon.query=light&icon.size=24&icon.color=%235f6368 -->

@@ -1,0 +1,23 @@
+.mat-mdc-progress-bar {
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+p {
+    margin: 0 0 .5em;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+  }
+  
+  .title-container div {
+    font-size: 20px;
+  }
+  
+  button[mat-icon-button] {
+    margin-left: 10px;
+  }
+  

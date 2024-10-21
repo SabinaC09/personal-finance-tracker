@@ -1,4 +1,23 @@
 .container {
     display: flex;
     justify-content: space-around;
-}
+    flex-wrap: wrap;
+  }
+  
+  .balance-amount {
+    font-size: 35px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .card-spacing {
+    margin: 2em 1em;
+  }
+
+//   add theme colors
+  .tips {
+    border: 1px solid !important;
+    border-color: rgb(140, 10, 53) !important;
+    border-radius: 16px;
+    background-color: rgb(230, 213, 218);
+  }
