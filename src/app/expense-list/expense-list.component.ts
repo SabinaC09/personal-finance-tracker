@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Expense } from './expense.model';
 import { DUMMY_EXPENSES } from './expense-data';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { Router, RouterModule } from '@angular/router';
+import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-expense-list',
@@ -26,6 +28,9 @@ import { MatInputModule } from '@angular/material/input';
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
+    RouterModule,
+    MatExpansionModule,
+    MatAccordion
   ],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
@@ -35,6 +40,8 @@ export class ExpenseListComponent implements OnInit {
   myControl = new FormControl('');
   options: string[] = this.expenses.map((expense) => expense.description);
   filteredOptions: Observable<string[]> | undefined;
+
+  constructor(private router: Router) { }
 
   // needs more work
   ngOnInit(): void {
@@ -53,5 +60,9 @@ export class ExpenseListComponent implements OnInit {
     return this.options.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
+  }
+
+  navigateToAddEditExpense() {
+    this.router.navigate(['/add-expense']);
   }
 }

@@ -6,11 +6,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
-  selector: 'app-latest-tranzactions-card',
+  selector: 'app-latest-transactions-card',
   standalone: true,
   imports: [MatCardModule, MatProgressBarModule, MatMenuModule, MatIconModule, MatButtonModule],
-  templateUrl: './latest-tranzactions-card.component.html',
-  styleUrl: './latest-tranzactions-card.component.scss'
+  templateUrl: './latest-transactions-card.component.html',
+  styleUrl: './latest-transactions-card.component.scss'
 })
 export class LatestTranzactionsCardComponent {
 

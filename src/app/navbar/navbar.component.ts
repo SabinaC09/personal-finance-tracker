@@ -8,14 +8,17 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatDrawer, MatDrawerContainer, RouterOutlet, MatButtonModule, MatListModule, MatIconModule, RouterModule],
+  imports: [MatDrawer, MatDrawerContainer, RouterOutlet, MatButtonModule, MatListModule, MatIconModule, RouterModule, MatIconModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  @ViewChild('drawer') drawer!: MatDrawer; 
+
   constructor(private router: Router) { }
 
-  navigateToDashboard() {
-    this.router.navigate(['/dashboard']);
+  navigateTo(linkName: string) {
+    this.drawer.close()
+    this.router.navigate([linkName]);
   }
 }

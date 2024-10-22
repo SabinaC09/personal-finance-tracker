@@ -1,18 +1,26 @@
 <mat-drawer-container class="container full-screen-container" autosize>
-  <mat-drawer #drawer class="sidenav full-height-sidenav" mode="side">
-    <mat-list role="list">
-      <mat-list-item role="listitem"><a (click)="navigateToDashboard()" [routerLink]="['/dashboard']">Dashboard</a></mat-list-item>
-      <mat-list-item role="listitem">Expenses</mat-list-item>
-      <mat-list-item role="listitem">Income</mat-list-item>
-      <mat-list-item role="listitem">Budget</mat-list-item>
-      <mat-list-item role="listitem">Settings</mat-list-item>
-      <mat-list-item role="listitem">Login/Sign up</mat-list-item>
-    </mat-list>
-  </mat-drawer>
+    <mat-drawer #drawer class="sidenav full-height-sidenav" mode="side">
+        <mat-list role="list">
+            <mat-list-item role="listitem"><mat-icon>dashboard</mat-icon><a (click)="navigateTo('/dashboard')"
+                    [routerLink]="['/dashboard']">Dashboard</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>account_balance_wallet</mat-icon><a
+                    (click)="navigateTo('/expense-list')" [routerLink]="['/expense-list']">Expenses</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>credit_card</mat-icon><a
+                    (click)="navigateTo('/income-list')" [routerLink]="['/income-list']">Income</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>show_chart</mat-icon><a
+                    (click)="navigateTo('/budget-details')"
+                    [routerLink]="['/budget-details']">Budget</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>settings</mat-icon><a
+                    (click)="navigateTo('/settings')" [routerLink]="['/settings']">Settings</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>account_circle</mat-icon><a
+                    (click)="navigateTo('/login')" [routerLink]="['/login']">Login/Sign up</a></mat-list-item>
+        </mat-list>
+    </mat-drawer>
 
-  <div class="sidenav-content full-height-content">
-    <button type="button" mat-button (click)="drawer.toggle()" class="menu-button"><mat-icon>menu</mat-icon></button>
-    <router-outlet></router-outlet>
-  </div>
+    <div class="sidenav-content full-height-content">
+        <button type="button" mat-button (click)="drawer.toggle()"
+            class="menu-button"><mat-icon>menu</mat-icon></button>
+        <router-outlet></router-outlet>
+    </div>
 
 </mat-drawer-container>

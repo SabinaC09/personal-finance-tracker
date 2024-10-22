@@ -1,9 +1,10 @@
 <div class="expense-container">
-    <h1 style="color: rgb(166, 30, 125); margin-top: 200px; flex-grow: 2;" >Expenses</h1>
-    <button mat-raised-button aria-label="Add expense" style="flex-basis: 25%;margin-top: 200px;">
+    <h1 style="color: rgb(166, 30, 125); margin-top: 200px; flex-grow: 2;">Expenses</h1>
+    <button mat-raised-button aria-label="Add expense" style="flex-basis: 25%;margin-top: 200px;"
+        (click)="navigateToAddEditExpense()" [routerLink]="['/add-expense']">
         Add expense
     </button>
-    
+
     <form>
         <mat-form-field style="flex-basis: 90%">
             <mat-label>Search</mat-label>
@@ -17,18 +18,21 @@
             </mat-autocomplete>
         </mat-form-field>
     </form>
-    <button mat-raised-button aria-label="Filter by" >
+    <button mat-raised-button aria-label="Filter by">
         Filter by
     </button>
 
     <div class="expense-list" style="flex-basis: 90%">
-        <mat-card *ngFor="let expense of expenses" class="expense-card">
-            <mat-card-title>{{ expense.description }}</mat-card-title>
-            <mat-card-subtitle>{{ expense.date | date:'longDate' }}</mat-card-subtitle>
-            <mat-card-content>
-                <p>Category: {{ expense.category }}</p>
-                <p>Amount: {{ expense.amount | currency:'RON' }}</p>
-            </mat-card-content>
-        </mat-card>
+        <mat-accordion multi>
+            <mat-expansion-panel hideToggle *ngFor="let expense of expenses">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> {{expense.description}} </mat-panel-title>
+                    <mat-panel-description style="justify-content: flex-end;"> {{expense.amount}}
+                        RON</mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Date: {{expense.date}}</p>
+                <p>Category: {{expense.category}}</p>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 </div>

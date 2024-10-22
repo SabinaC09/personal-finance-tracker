@@ -1,12 +1,20 @@
 <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Total expense</mat-card-title>
-      <mat-card-subtitle>this month</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      To do add graph
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button (click)="navigateToExpenseList()" [routerLink]="['/expense-list']">Learn More</button>
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>Total expense</mat-card-title>
+    <mat-card-subtitle>
+      <mat-form-field class="select-period" style="background-color: white !important;">
+        <mat-select [(value)]="selectedPeriod" >
+          <mat-option value="today">Today</mat-option>
+          <mat-option value="this week">This week</mat-option>
+          <mat-option value="this month">This month</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    To do add graph
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="navigateToExpenseList()" [routerLink]="['/expense-list']">Learn More</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LatestTranzactionsCardComponent } from './latest-tranzactions-card.component';
+import { LatestTranzactionsCardComponent } from './latest-transactions-card.component';
 
 describe('LatestTranzactionsCardComponent', () => {
   let component: LatestTranzactionsCardComponent;

@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BudgetComponent } from './budget.component';
+import { BudgetCardComponent } from './budget.-card.component';
 
 describe('BudgetComponent', () => {
-  let component: BudgetComponent;
-  let fixture: ComponentFixture<BudgetComponent>;
+  let component: BudgetCardComponent;
+  let fixture: ComponentFixture<BudgetCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BudgetComponent]
+      imports: [BudgetCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BudgetComponent);
+    fixture = TestBed.createComponent(BudgetCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
