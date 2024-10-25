@@ -1,7 +1,25 @@
-
+.container {
+    // display: flex;
+    // justify-content: center;
+    // width: 100%;
+}
 .select-period {
-    background-color: white !important;
     width: 140px !important;
     height: 60px !important;
-    padding: 0px;
 }
+
+.mat-mdc-text-field-wrapper {
+    background-color: white !important;
+  }
+
+//   .mat-mdc-option.mdc-list-item {
+//     background-color: white !important;
+// }
+
+// .mat-mdc-option:focus.mdc-list-item, .mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+//     background-color: white !important;
+// }
+
+// div.mat-mdc-select-panel {
+//     padding: 0px;
+// }

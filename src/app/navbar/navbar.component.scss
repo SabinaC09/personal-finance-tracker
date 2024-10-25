@@ -5,15 +5,14 @@
   .sidenav-content {
     display: flex;
     height: 100%;
-    align-items: center;
+    // align-items: center;
   }
 
   .full-screen-container {
-    height: 100vh; /* Full height of the viewport */
-    width: 100vw;  /* Full width of the viewport */
+    height: 100vh; 
+    width: 100vw;  
   }
   
-  /* Make the sidenav and content take up full height */
   .full-height-sidenav, .full-height-content {
     height: 100%;
   }
@@ -37,4 +36,8 @@
   .mat-mdc-button>.mat-icon, .mat-mdc-unelevated-button>.mat-icon, .mat-mdc-raised-button>.mat-icon, .mat-mdc-outlined-button>.mat-icon {
      font-size: 1.5rem; 
     
+}
+
+mat-drawer {
+    // background-color: pink;
 }

@@ -10,6 +10,6 @@ export const routes: Routes = [{ path: '', redirectTo: '/dashboard', pathMatch: 
 { path: 'add-expense', component: AddEditExpenseComponent },
 { path: 'edit-expense/:id', component: AddEditExpenseComponent },
 { path: 'income-list', component: ExpenseListComponent },
-{ path: 'budget-details', component: BudgetDetailsComponent },
+{ path: 'budget', component: BudgetDetailsComponent },
 ];
 

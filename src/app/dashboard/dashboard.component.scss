@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
   }
   
@@ -12,6 +12,7 @@
 
   .card-spacing {
     margin: 2em 1em;
+    width: 30%;
   }
 
 //   add theme colors

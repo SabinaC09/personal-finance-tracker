@@ -1,12 +1,12 @@
 <div class="expense-container">
-    <h1 style="color: rgb(166, 30, 125); margin-top: 200px; flex-grow: 2;">Expenses</h1>
-    <button mat-raised-button aria-label="Add expense" style="flex-basis: 25%;margin-top: 200px;"
+    <h1 style="color: rgb(166, 30, 125); flex-grow: 2;">Expenses</h1>
+    <button mat-raised-button aria-label="Add expense" style="flex-basis: 25%;margin-top: 2em; margin-right: 3em;"
         (click)="navigateToAddEditExpense()" [routerLink]="['/add-expense']">
         Add expense
     </button>
 
     <form>
-        <mat-form-field style="flex-basis: 90%">
+        <mat-form-field style="width: 50%;">
             <mat-label>Search</mat-label>
             <mat-icon matSuffix>search</mat-icon>
             <input type="text" placeholder="Search by description" matInput [formControl]="myControl"
@@ -18,11 +18,63 @@
             </mat-autocomplete>
         </mat-form-field>
     </form>
-    <button mat-raised-button aria-label="Filter by">
+    <!-- <button mat-raised-button aria-label="Filter by">
+        Filter by
+    </button>
+     -->
+
+    <!-- Filter By Button and Expansion Panel -->
+    <button mat-button (click)="panelOpenState = !panelOpenState" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+        aria-label="Filter by">
         Filter by
     </button>
 
-    <div class="expense-list" style="flex-basis: 90%">
+    <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="panelOpenState">
+        <!-- Category Filter -->
+        <mat-card >
+            <div style="display: flex;flex-direction: column; margin: 10px;">
+                <div>Categories :
+                    <section style="display: flex; flex-direction: column;">
+                        @for (category of categories; track category.name; let i = $index) {
+                        <mat-checkbox [checked]="category.checked" (change)="update($event.checked)">
+                            {{category.name}}
+                        </mat-checkbox>
+                        }
+                    </section>
+                </div>
+            
+
+            <div>Price Range
+                <mat-form-field>
+                    <mat-label>Min Price</mat-label>
+                    <input matInput type="number" [(ngModel)]="minPrice">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Max Price</mat-label>
+                    <input matInput type="number" [(ngModel)]="maxPrice">
+                </mat-form-field>
+            </div>
+
+            <div>Date Range
+                <mat-form-field>
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button (click)="applyFilters()">Apply Filters</button>
+        </div>
+        </mat-card>
+    </ng-template>
+
+    <div class="expense-list" style="flex-basis: 96%">
         <mat-accordion multi>
             <mat-expansion-panel hideToggle *ngFor="let expense of expenses">
                 <mat-expansion-panel-header>

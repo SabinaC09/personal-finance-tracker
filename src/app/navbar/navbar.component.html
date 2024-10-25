@@ -5,21 +5,23 @@
                     [routerLink]="['/dashboard']">Dashboard</a></mat-list-item>
             <mat-list-item role="listitem"><mat-icon>account_balance_wallet</mat-icon><a
                     (click)="navigateTo('/expense-list')" [routerLink]="['/expense-list']">Expenses</a></mat-list-item>
-            <mat-list-item role="listitem"><mat-icon>credit_card</mat-icon><a
-                    (click)="navigateTo('/income-list')" [routerLink]="['/income-list']">Income</a></mat-list-item>
-            <mat-list-item role="listitem"><mat-icon>show_chart</mat-icon><a
-                    (click)="navigateTo('/budget-details')"
+            <mat-list-item role="listitem"><mat-icon>credit_card</mat-icon><a (click)="navigateTo('/income-list')"
+                    [routerLink]="['/income-list']">Income</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>show_chart</mat-icon><a (click)="navigateTo('/budget-details')"
                     [routerLink]="['/budget-details']">Budget</a></mat-list-item>
-            <mat-list-item role="listitem"><mat-icon>settings</mat-icon><a
-                    (click)="navigateTo('/settings')" [routerLink]="['/settings']">Settings</a></mat-list-item>
-            <mat-list-item role="listitem"><mat-icon>account_circle</mat-icon><a
-                    (click)="navigateTo('/login')" [routerLink]="['/login']">Login/Sign up</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>settings</mat-icon><a (click)="navigateTo('/settings')"
+                    [routerLink]="['/settings']">Settings</a></mat-list-item>
+            <mat-list-item role="listitem"><mat-icon>account_circle</mat-icon><a (click)="navigateTo('/login')"
+                    [routerLink]="['/login']">Login/Sign up</a></mat-list-item>
         </mat-list>
     </mat-drawer>
 
+    <!-- <div class="toolbar" style="display: flex; flex-direction: column; background-color: pink;"> </div>-->
     <div class="sidenav-content full-height-content">
         <button type="button" mat-button (click)="drawer.toggle()"
             class="menu-button"><mat-icon>menu</mat-icon></button>
+        <!-- <button type="button" mat-button (click)="navigateTo('/expense-list')" [routerLink]="['/expense-list']"
+            class="menu-button"><mat-icon>account_balance_wallet</mat-icon></button> -->
         <router-outlet></router-outlet>
     </div>
 

@@ -1,39 +1,25 @@
 <div class="container">
-    <mat-card appearance="outlined" class="card-spacing" style="flex-basis: 30%">
-        <mat-card-header>
-          <mat-card-title>Current Balance</mat-card-title>
-        </mat-card-header>
-        <mat-card-content style='font-size: 40px'>
-            <div class="balance-amount">3200 RON</div>
-          </mat-card-content>
-      </mat-card>
 
-    <app-expense-card style="flex-basis: 30%" class ="card-spacing"></app-expense-card>
-    <app-budget-card style="flex-basis: 30%"></app-budget-card>
+    <app-simple-card class="card-spacing" title="Current Balance" content="3200 RON" [learnMore]=false></app-simple-card>
+    <app-expense-card style="flex-grow: 2;" class="card-spacing"></app-expense-card>
+    <app-simple-card class="card-spacing" title="Budget" content="6000 RON" [learnMore]=true></app-simple-card>
+
     <app-latest-transactions-card style="flex-basis: 90%"></app-latest-transactions-card>
 
-    <mat-card appearance="outlined" style="flex-basis: 30%" class="card-spacing">
+    <mat-card appearance="outlined" class="card-spacing">
         <mat-card-header>
-          <mat-card-title>Budgetting tips <mat-icon>wb_incandescent</mat-icon></mat-card-title>
+            <mat-card-title>Budgetting tips <mat-icon>wb_incandescent</mat-icon></mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div class="tips">The 50/30/20 rule. 50% for house (groceries, utilities, transport) 30% for wants(streaming platforms, shopping) and 20% for financial goals (savings)</div>
-          </mat-card-content>
-          <mat-card-actions align="end">
+            <div class="tips">The 50/30/20 rule. 50% for house (groceries, utilities, transport) 30% for wants(streaming
+                platforms, shopping) and 20% for financial goals (savings)</div>
+        </mat-card-content>
+        <mat-card-actions align="end">
             <button mat-button>Learn More</button>
-          </mat-card-actions>
-      </mat-card>
-
-    <app-income-card style="flex-basis: 30%" class="card-spacing"></app-income-card>
-
-    <mat-card appearance="outlined" class="card-spacing" style="flex-basis: 30%">
-        <mat-card-header>
-          <mat-card-title>Savings</mat-card-title>
-        </mat-card-header>
-        <mat-card-content style='font-size: 40px'>
-            <div class="balance-amount">20500 RON</div>
-          </mat-card-content>
-      </mat-card>
+        </mat-card-actions>
+    </mat-card>
+    <app-income-card class="card-spacing" class="card-spacing"></app-income-card>
+    <app-simple-card class="card-spacing" title="Savings" content="20500 RON" [learnMore]=false></app-simple-card>
 </div>
 
 <!-- https://www.angularjswiki.com/angular/angular-material-icons-list-mat-icon-list/ -->

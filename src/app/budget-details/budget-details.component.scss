@@ -3,5 +3,12 @@ div.mat-mdc-card-header-text {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     overflow: auto;
+}
+
+.mat-mdc-card-header {
+    display: block;
 }
