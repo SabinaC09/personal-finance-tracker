@@ -19,7 +19,13 @@ button[mat-raised-button] {
 
 form {
     min-width: 150px;
-    // max-width: 500px;
     width: 100%;
 }
 
+.backdrop-transparent {
+    background-color: transparent !important;
+}
+
+.button-icon {
+    cursor: pointer !important;
+}

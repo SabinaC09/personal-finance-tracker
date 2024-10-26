@@ -1,10 +1,30 @@
 <div class="container">
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title>Total expense</mat-card-title>
+      <mat-card-title>Total expense  
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Select chart type">
+        <mat-icon>more_vert</mat-icon>
+    </button></mat-card-title>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="chartType='bar'">
+          <span>Bar</span>
+      </button>
+      <button mat-menu-item (click)="chartType='doughnut'">
+          <span>Doughnut</span>
+      </button>
+      <button mat-menu-item (click)="chartType='radar'">
+          <span>Radar</span>
+      </button>
+      <button mat-menu-item (click)="chartType='line'">
+        <span>Line</span>
+    </button>
+    <button mat-menu-item (click)="chartType='pie'">
+      <span>Pie</span>
+  </button>
+  </mat-menu>
       <mat-card-subtitle>
-        <mat-form-field class="select-period" style="background-color: white !important;">
-          <mat-select [(value)]="selectedPeriod">
+        <mat-form-field class="select-period" >
+          <mat-select [(value)]="selectedPeriod" (selectionChange)="onPeriodChange()">
             <mat-option value="today">Today</mat-option>
             <mat-option value="this week">This week</mat-option>
             <mat-option value="this month">This month</mat-option>
@@ -13,9 +33,16 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <!-- <div>
-        <canvas id="chartCanvas">{{chart}}</canvas>
-      </div> -->
+      <div style="display: block; height: 60%;width: 60%;">
+        <canvas baseChart
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [legend]="true"
+          [type]="chartType"
+          >
+        </canvas>
+      </div>
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-button (click)="navigateToExpenseList()" [routerLink]="['/expense-list']">Learn More</button>

@@ -37,72 +37,89 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAccordion,
     MatDatepickerModule,
     OverlayModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
-  providers: [provideNativeDateAdapter()]
+  providers: [provideNativeDateAdapter()],
 })
 export class ExpenseListComponent implements OnInit {
-  expenses: Expense[] = DUMMY_EXPENSES
-  myControl = new FormControl('');
+  expenses: Expense[] = DUMMY_EXPENSES;
+  searchControl = new FormControl('');
   options: string[] = this.expenses.map((expense) => expense.description);
   filteredOptions: Observable<string[]> | undefined;
+  filterByPanelState = false;
+  filteredExpenses = this.expenses;
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  categories = this.expenses
+    .map((expense) => expense.categoryName)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .map((name) => ({ name, checked: false }));
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  // needs more work
   ngOnInit(): void {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
-      map((value) => {
-        if (value != null && value.length > 0) return this._filter(value || '');
-        else return [];
-      })
+      map(value => (value && value.length > 0) ? this._filter(value) : [])
     );
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().startsWith(filterValue));
+  }
 
-    return this.options.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
+  onSearch() {
+    const searchTerm = this.searchControl.value?.toLowerCase();
+    if (searchTerm) {
+      this.filteredExpenses = this.expenses.filter(expense => 
+        expense.description.toLowerCase().startsWith(searchTerm)
+      );
+    }
+  }
+  resetSearch(): void {
+    this.searchControl.setValue('');
+    this.filteredExpenses = this.expenses; 
   }
 
   navigateToAddEditExpense() {
     this.router.navigate(['/add-expense']);
   }
 
-  categories = this.expenses.map(expense => ({ name: expense.description, checked: false }));
+  applyFilters() {
+    const selectedCategories = this.categories
+      .filter((category) => category.checked)
+      .map((category) => category.name);
 
-  minPrice: number | undefined;
-  maxPrice: number | undefined;
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+    this.filteredExpenses = this.expenses.filter((expense) => {
+      const categoryMatch =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(expense.categoryName);
 
-  panelOpenState = false;
-  filteredExpenses = this.expenses;
+      const priceMatch =
+        (this.minPrice == null || expense.amount >= this.minPrice) &&
+        (this.maxPrice == null || expense.amount <= this.maxPrice);
 
-  update() {
-    
+      const expenseDate = new Date(expense.date);
+      const dateMatch =
+        (!this.startDate || expenseDate >= new Date(this.startDate)) &&
+        (!this.endDate || expenseDate <= new Date(this.endDate));
+
+      this.filterByPanelState = false;
+      return categoryMatch && priceMatch && dateMatch;
+    });
   }
 
-  applyFilters() {
-    // Filter by category
-    const selectedCategories = this.categories.filter(category => category.checked).map(category => category.name);
-
-    this.filteredExpenses = this.expenses.filter(expense => {
-      // const matchesCategory = selectedCategories.length ? selectedCategories.includes(expensesel.category) : true;
-      // const matchesPrice = (!this.minPrice || expense.amount >= this.minPrice) && (!this.maxPrice || expense.amount <= this.maxPrice);
-      // const matchesDate = (!this.startDate || new Date(expense.date) >= this.startDate) && (!this.endDate || new Date(expense.date) <= this.endDate);
-      // return matchesCategory && matchesPrice && matchesDate;
-      // return matchesCategory
-      console.log(selectedCategories)
-        
-    });
-    console.log(this.filteredExpenses)
-    this.panelOpenState = false;
+  resetFilters() {
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.startDate = null;
+    this.endDate = null;
+    this.categories.forEach(category => (category.checked = false));
+    this.filteredExpenses = this.expenses; 
   }
 }
-
