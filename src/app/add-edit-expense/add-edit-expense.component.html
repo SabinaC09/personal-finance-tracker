@@ -7,7 +7,7 @@
         <div >
             <mat-form-field appearance="fill" class="field" style="margin-right: 10px;">
                 <mat-label>Expense Name</mat-label>
-                <input matInput formControlName="name" placeholder="Enter expense name" />
+                <input matInput formControlName="description" placeholder="Enter expense description" />
             </mat-form-field>
         
             <mat-form-field appearance="fill" class="field">
@@ -29,12 +29,31 @@
                 </mat-datepicker>
             </mat-form-field>
         
-            <mat-form-field appearance="fill" class="field">
+            <!-- <mat-form-field appearance="fill" class="field">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="category">
                     <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <input 
+                  matInput 
+                  [formControl]="categoryControl" 
+                  [matAutocomplete]="auto" 
+                  placeholder="Enter category" 
+                />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let category of filteredCategories" [value]="category">
+                    {{ category }}
+                  </mat-option>
+                  <mat-option *ngIf="isNewCategoryVisible" (click)="addNewCategory()">
+                    Create "{{ newCategory }}"
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              
+
         </div>
 
         <div class="form-actions">
