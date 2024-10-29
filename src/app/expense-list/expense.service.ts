@@ -7,7 +7,7 @@ import { Expense } from "./expense.model";
     providedIn: 'root'
   })
   export class ExpenseService {
-    private baseUrl = 'http://localhost:8080/api/expenses';
+    private baseUrl = 'http://localhost:8080/expenses';
   
     constructor(private http: HttpClient) {}
   
@@ -18,7 +18,15 @@ import { Expense } from "./expense.model";
     addExpense(expense: Expense): Observable<Expense> {
       return this.http.post<Expense>(this.baseUrl, expense);
     }
-  
+
+    getCategories(): Observable<string[]> {
+      return this.http.get<string[]>(`${this.baseUrl}/categories`); 
+    }
+
+    updateExpense(id: number, expense: Expense): Observable<Expense> {
+      return this.http.put<Expense>(`${this.baseUrl}/${id}`, expense);
+    }
+    
     // updateExpense(id: number, expense: Expense): Observable<Expense> {
     //   return this.http.put<Expense>(`${this.baseUrl}/${id}`, expense);
     // }

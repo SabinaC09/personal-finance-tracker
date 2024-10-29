@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ExpenseService } from './expense.service';
 
 @Component({
   selector: 'app-expense-list',
@@ -44,9 +45,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   providers: [provideNativeDateAdapter()],
 })
 export class ExpenseListComponent implements OnInit {
-  expenses: Expense[] = DUMMY_EXPENSES;
+  expenses: Expense[] = [];
   searchControl = new FormControl('');
-  options: string[] = Array.from(new Set(this.expenses.map(expense => expense.description)));
+  options: string[] = Array.from(
+    new Set(this.expenses.map((expense) => expense.description))
+  );
   filteredOptions: Observable<string[]> | undefined;
   filterByPanelState = false;
   filteredExpenses = this.expenses;
@@ -59,24 +62,39 @@ export class ExpenseListComponent implements OnInit {
     .filter((value, index, self) => self.indexOf(value) === index)
     .map((name) => ({ name, checked: false }));
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private expenseService: ExpenseService) {}
 
   ngOnInit(): void {
+    this.fetchExpenses();
+
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
-      map(value => (value && value.length > 0) ? this._filter(value) : [])
+      map((value) => (value && value.length > 0 ? this._filter(value) : []))
     );
+  }
+
+  fetchExpenses(): void {
+    this.expenseService.getExpenses().subscribe({
+      next: (data) => {
+        this.filteredExpenses = data;
+      },
+      error: (error) => {
+        console.error('Error fetching expenses:', error);
+      },
+    });
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.options.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 
   onSearch() {
     const searchTerm = this.searchControl.value?.toLowerCase();
     if (searchTerm) {
-      this.filteredExpenses = this.expenses.filter(expense =>
+      this.filteredExpenses = this.expenses.filter((expense) =>
         expense.description.toLowerCase().startsWith(searchTerm)
       );
     }
@@ -86,12 +104,13 @@ export class ExpenseListComponent implements OnInit {
     this.filteredExpenses = this.expenses;
   }
 
-  navigateToAddEditExpense(id?: number) {
-    const route = id ? `/edit-expense/${id}` : '/add-expense';
-    this.router.navigate([route]);
+  navigateToAddEditExpense(expense?: Expense) {
+    expense
+      ? this.router.navigateByUrl(`/edit-expense/${expense.id}`, {
+          state: { expense },
+        })
+      : this.router.navigate(['/add-expense']);
   }
-
-  // this.router.navigate(['/add-edit-expense', expenseId], { queryParams: { description: expense.description, amount: expense.amount } });
 
   applyFilters() {
     const selectedCategories = this.categories
@@ -122,7 +141,7 @@ export class ExpenseListComponent implements OnInit {
     this.maxPrice = null;
     this.startDate = null;
     this.endDate = null;
-    this.categories.forEach(category => (category.checked = false));
+    this.categories.forEach((category) => (category.checked = false));
     this.filteredExpenses = this.expenses;
   }
 }

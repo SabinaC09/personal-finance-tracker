@@ -1,6 +1,6 @@
 <div class="expense-form-container">
     <div>
-        <h1>Add Expense</h1>
+        <h1 style="color: rgb(166, 30, 125);">{{ isEditMode ? 'Update Expense' :'Add Expense'}}</h1>
 
     </div>
     <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
@@ -28,13 +28,15 @@
                     </mat-datepicker-actions>
                 </mat-datepicker>
             </mat-form-field>
-            
+
             <mat-form-field appearance="fill">
                 <mat-label>Select Category</mat-label>
-                <mat-icon matSuffix class="button-icon" *ngIf="!this.expenseForm.get('category')?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon matSuffix class="button-icon"
+                    *ngIf="!this.expenseForm.get('category')?.value">keyboard_arrow_down</mat-icon>
                 <input type="text" formControlName="category" placeholder="Search category" matInput
                     [matAutocomplete]="auto">
-                <mat-icon matSuffix keyboard_arrow_down  class="button-icon" *ngIf="this.expenseForm.get('category')?.value" (click)="resetCategory()">close</mat-icon>
+                <mat-icon matSuffix keyboard_arrow_down class="button-icon"
+                    *ngIf="this.expenseForm.get('category')?.value" (click)="resetCategory()">close</mat-icon>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     @for (option of filteredOptions | async; track option) {
                     <mat-option [value]="option">{{option}}</mat-option>

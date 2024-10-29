@@ -75,7 +75,7 @@
     </ng-template>
 
     <div class="expense-list" style="flex-basis: 96%">
-        <mat-accordion multi>
+        <mat-accordion multi *ngIf="filteredExpenses.length > 0; else noExpenses">
             <mat-expansion-panel hideToggle *ngFor="let expense of filteredExpenses">
                 <mat-expansion-panel-header>
                     <mat-panel-title> {{expense.description}} </mat-panel-title>
@@ -87,9 +87,14 @@
                     <p>Category: {{expense.categoryName}}</p>
                 </div>
                 <div class="edit-icon">
-                    <mat-icon class="button-icon" (click)="navigateToAddEditExpense(expense.id)" [routerLink]="['/edit-expense/:id']">edit</mat-icon>
+                    <mat-icon class="button-icon" (click)="navigateToAddEditExpense(expense)"
+                        [routerLink]="['/edit-expense/:id']">edit</mat-icon>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
+
+        <ng-template #noExpenses>
+            <p>No expenses available.</p>
+        </ng-template>
     </div>
 </div>
