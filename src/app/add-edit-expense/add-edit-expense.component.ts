@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { ExpenseService } from '../expense-list/expense.service';
 import { map, Observable, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-edit-expense',
@@ -37,6 +38,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatInputModule,
     MatButtonModule,
     MatAutocompleteModule,
+    MatIconModule
   ],
   templateUrl: './add-edit-expense.component.html',
   styleUrl: './add-edit-expense.component.scss',
@@ -46,30 +48,22 @@ export class AddEditExpenseComponent {
   isEditMode = false;
   categories: string[] = [
     'Food',
-    'Groceries',
     'Transportation',
     'Utilities',
     'Entertainment',
-    'Other',
   ];
   expenseId: number | null = null;
   private _snackBar = inject(MatSnackBar);
   private location = inject(Location);
   private expenseService = inject(ExpenseService);
-  categoryControl = new FormControl();
-  filteredCategories: Observable<string[]>;
   newCategory: string = '';
-  isNewCategoryVisible: boolean = false;
+  options: string[] = Array.from(new Set(this.categories));
+  filteredOptions: Observable<string[]> | undefined;
+  filteredCategories = this.categories;
+  showIcon: boolean = true;
 
   constructor(private fb: FormBuilder) // private route: ActivatedRoute
   {
-    this.categoryControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterCategories(value))
-    ) .subscribe(filtered => {
-      this.filteredCategories = filtered; // Assign the filtered result to the property
-    });
-
     this.expenseForm = this.fb.group({
       description: new FormControl('', {
         validators: [Validators.required],
@@ -86,29 +80,23 @@ export class AddEditExpenseComponent {
     });
   }
 
-  private _filterCategories(value: string): string[] {
+  private _filter(value: string): string[] {
+    value.length > 2 ? this.showIcon = false : this.showIcon = true;
     const filterValue = value.toLowerCase();
-    const matchingCategories = this.categories.filter(category => category.toLowerCase().includes(filterValue));
-
-    // Show the "Create" option if the typed category is not in the list
-    this.newCategory = value; // Update the newCategory variable
-    this.isNewCategoryVisible = matchingCategories.length === 0 && value.length > 0;
-
-    return matchingCategories;
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  addNewCategory() {
-    // Handle the addition of the new category
-    if (this.newCategory) {
-      this.categories.push(this.newCategory);
-      this.categoryControl.setValue(this.newCategory); // Set the input to the new category
-      this.newCategory = ''; // Reset the new category input
-      this.isNewCategoryVisible = false; // Hide the create option
-    }
+  resetCategory(): void {
+    this.expenseForm.get('category')!.setValue('');
+    this.filteredCategories = this.categories;
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit() {
+    this.filteredOptions =  this.expenseForm.get('category')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+
     // Check if we are editing an existing expense
     // this.route.paramMap.subscribe(params => {
     //   this.expenseId = params.get('id');
@@ -138,44 +126,33 @@ export class AddEditExpenseComponent {
   }
 
   onSubmit() {
+    
     if (this.expenseForm.valid) {
       const expenseData = this.expenseForm.value;
       const newExpense: Expense = {
         description: expenseData.description,
         amount: expenseData.amount,
         date: expenseData.date,
-        categoryName: expenseData.category 
+        categoryName: expenseData.category
       };
       if (this.isEditMode) {
         console.log('Updating expense:', expenseData);
       } else {
         console.log('Adding new expense:', newExpense);
-        this.expenseService
-          .addExpense(newExpense)
-          .subscribe({
-            next: (response) => {
-              console.log('Expense added:', response);
-            },
-            error: (error) => {
-              console.error('Error adding expense:', error);
-            },
-          });
+        // this.expenseService
+        //   .addExpense(newExpense)
+        //   .subscribe({
+        //     next: (response) => {
+        //       console.log('Expense added:', response);
+        //     },
+        //     error: (error) => {
+        //       console.error('Error adding expense:', error);
+        //     },
+        //   });
         this.openSnackBar('Expense Added Succesfully', 'Close');
         this.location.back();
       }
     }
-    
-
-    // if (this.expenseForm.valid) {
-    //   const expenseData = this.expenseForm.value;
-    //   if (this.isEditMode) {
-    //     console.log('Updating expense:', expenseData);
-    //   } else {
-    //     console.log('Adding new expense:', expenseData);
-    //     this.openSnackBar('Expense Added Succesfully', 'Close')
-    //     this.location.back()
-    //   }
-    // }
   }
 
   onCancel() {

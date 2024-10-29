@@ -1,15 +1,15 @@
 <div class="expense-form-container">
     <div>
         <h1>Add Expense</h1>
-        
+
     </div>
-    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" >
-        <div >
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+        <div>
             <mat-form-field appearance="fill" class="field" style="margin-right: 10px;">
                 <mat-label>Expense Name</mat-label>
                 <input matInput formControlName="description" placeholder="Enter expense description" />
             </mat-form-field>
-        
+
             <mat-form-field appearance="fill" class="field">
                 <mat-label>Amount</mat-label>
                 <input matInput type="number" formControlName="amount" placeholder="Enter amount" />
@@ -28,31 +28,19 @@
                     </mat-datepicker-actions>
                 </mat-datepicker>
             </mat-form-field>
-        
-            <!-- <mat-form-field appearance="fill" class="field">
-                <mat-label>Category</mat-label>
-                <mat-select formControlName="category">
-                    <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
-                </mat-select>
-            </mat-form-field> -->
-            <mat-form-field>
-                <mat-label>Category</mat-label>
-                <input 
-                  matInput 
-                  [formControl]="categoryControl" 
-                  [matAutocomplete]="auto" 
-                  placeholder="Enter category" 
-                />
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let category of filteredCategories" [value]="category">
-                    {{ category }}
-                  </mat-option>
-                  <mat-option *ngIf="isNewCategoryVisible" (click)="addNewCategory()">
-                    Create "{{ newCategory }}"
-                  </mat-option>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Select Category</mat-label>
+                <mat-icon matSuffix class="button-icon" *ngIf="!this.expenseForm.get('category')?.value">keyboard_arrow_down</mat-icon>
+                <input type="text" formControlName="category" placeholder="Search category" matInput
+                    [matAutocomplete]="auto">
+                <mat-icon matSuffix keyboard_arrow_down  class="button-icon" *ngIf="this.expenseForm.get('category')?.value" (click)="resetCategory()">close</mat-icon>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    @for (option of filteredOptions | async; track option) {
+                    <mat-option [value]="option">{{option}}</mat-option>
+                    }
                 </mat-autocomplete>
-              </mat-form-field>
-              
+            </mat-form-field>
 
         </div>
 
@@ -60,7 +48,7 @@
             <button mat-raised-button color="primary" type="button" (click)="onCancel()" style="margin-right: 10px;">
                 Cancel
             </button>
-        
+
             <button mat-raised-button color="primary" type="submit">
                 {{ isEditMode ? 'Update Expense' : 'Add Expense' }}
             </button>

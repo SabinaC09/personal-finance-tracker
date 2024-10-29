@@ -46,7 +46,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = DUMMY_EXPENSES;
   searchControl = new FormControl('');
-  options: string[] = this.expenses.map((expense) => expense.description);
+  options: string[] = Array.from(new Set(this.expenses.map(expense => expense.description)));
   filteredOptions: Observable<string[]> | undefined;
   filterByPanelState = false;
   filteredExpenses = this.expenses;
@@ -59,7 +59,7 @@ export class ExpenseListComponent implements OnInit {
     .filter((value, index, self) => self.indexOf(value) === index)
     .map((name) => ({ name, checked: false }));
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.searchControl.valueChanges.pipe(
@@ -70,25 +70,28 @@ export class ExpenseListComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().startsWith(filterValue));
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onSearch() {
     const searchTerm = this.searchControl.value?.toLowerCase();
     if (searchTerm) {
-      this.filteredExpenses = this.expenses.filter(expense => 
+      this.filteredExpenses = this.expenses.filter(expense =>
         expense.description.toLowerCase().startsWith(searchTerm)
       );
     }
   }
   resetSearch(): void {
     this.searchControl.setValue('');
-    this.filteredExpenses = this.expenses; 
+    this.filteredExpenses = this.expenses;
   }
 
-  navigateToAddEditExpense() {
-    this.router.navigate(['/add-expense']);
+  navigateToAddEditExpense(id?: number) {
+    const route = id ? `/edit-expense/${id}` : '/add-expense';
+    this.router.navigate([route]);
   }
+
+  // this.router.navigate(['/add-edit-expense', expenseId], { queryParams: { description: expense.description, amount: expense.amount } });
 
   applyFilters() {
     const selectedCategories = this.categories
@@ -120,6 +123,6 @@ export class ExpenseListComponent implements OnInit {
     this.startDate = null;
     this.endDate = null;
     this.categories.forEach(category => (category.checked = false));
-    this.filteredExpenses = this.expenses; 
+    this.filteredExpenses = this.expenses;
   }
 }

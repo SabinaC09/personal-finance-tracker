@@ -1,9 +1,9 @@
 .expense-container {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   width: 100%;
-   gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
 }
 
 button[mat-raised-button] {
@@ -28,4 +28,13 @@ form {
 
 .button-icon {
     cursor: pointer !important;
+}
+
+.mat-expansion-panel-header-description {
+    margin-right: 0px;
+    justify-content: flex-end;
+}
+
+.edit-icon {
+    text-align: end;
 }
