@@ -140,18 +140,6 @@ export class AddEditExpenseComponent {
     // });
   }
 
-  // Load existing expense data (this is just a placeholder function)
-  // loadExpenseData(expenseId: string) {
-  //   // Fetch the expense data from a service or backend using the ID
-  //   const existingExpense = {
-  //     name: 'Grocery Shopping',
-  //     amount: 150,
-  //     date: new Date(),
-  //     category: 'Food',
-  //   };
-  //   this.expenseForm.patchValue(existingExpense);  // Populate the form with existing data
-  // }
-
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 5000,

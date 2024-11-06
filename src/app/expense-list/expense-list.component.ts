@@ -47,9 +47,7 @@ import { ExpenseService } from './expense.service';
 export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = [];
   searchControl = new FormControl('');
-  options: string[] = Array.from(
-    new Set(this.expenses.map((expense) => expense.description))
-  );
+  options: string[] = [];
   filteredOptions: Observable<string[]> | undefined;
   filterByPanelState = false;
   filteredExpenses = this.expenses;
@@ -57,15 +55,17 @@ export class ExpenseListComponent implements OnInit {
   maxPrice: number | null = null;
   startDate: Date | null = null;
   endDate: Date | null = null;
-  categories = this.expenses
-    .map((expense) => expense.categoryName)
-    .filter((value, index, self) => self.indexOf(value) === index)
-    .map((name) => ({ name, checked: false }));
+  // categories = this.expenses
+  //   .map((expense) => expense.categoryName)
+  //   .filter((value, index, self) => self.indexOf(value) === index)
+  //   .map((name) => ({ name, checked: false }));
+  categories: any[] = [];
 
-  constructor(private router: Router, private expenseService: ExpenseService) {}
+  constructor(private router: Router, private expenseService: ExpenseService) { }
 
   ngOnInit(): void {
     this.fetchExpenses();
+    this.fetchCategories();
 
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
@@ -73,10 +73,27 @@ export class ExpenseListComponent implements OnInit {
     );
   }
 
+  fetchCategories() {
+    this.expenseService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories.map((category) => category)
+          .filter((value, index, self) => self.indexOf(value) === index)
+          .map((name) => ({ name, checked: false }));
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      },
+    });
+  }
+
   fetchExpenses(): void {
     this.expenseService.getExpenses().subscribe({
       next: (data) => {
         this.filteredExpenses = data;
+        this.expenses = data;
+        this.options = Array.from(
+          new Set(data.map((expense) => expense.description))
+        );
       },
       error: (error) => {
         console.error('Error fetching expenses:', error);
@@ -107,8 +124,8 @@ export class ExpenseListComponent implements OnInit {
   navigateToAddEditExpense(expense?: Expense) {
     expense
       ? this.router.navigateByUrl(`/edit-expense/${expense.id}`, {
-          state: { expense },
-        })
+        state: { expense },
+      })
       : this.router.navigate(['/add-expense']);
   }
 
