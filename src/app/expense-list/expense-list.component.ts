@@ -57,15 +57,29 @@ export class ExpenseListComponent implements OnInit {
   endDate: Date | null = null;
   categories: any[] = [];
 
-  constructor(private router: Router, private expenseService: ExpenseService) {}
+  constructor(private router: Router, private expenseService: ExpenseService) { }
 
   ngOnInit(): void {
     this.fetchExpenses();
+    this.fetchCategories();
 
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(''),
       map((value) => (value && value.length > 0 ? this._filter(value) : []))
     );
+  }
+
+  fetchCategories() {
+    this.expenseService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories.map((category) => category)
+          .filter((value, index, self) => self.indexOf(value) === index)
+          .map((name) => ({ name, checked: false }));
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      },
+    });
   }
 
   fetchExpenses(): void {
@@ -110,8 +124,8 @@ export class ExpenseListComponent implements OnInit {
   navigateToAddEditExpense(expense?: Expense) {
     expense
       ? this.router.navigateByUrl(`/edit-expense/${expense.id}`, {
-          state: { expense },
-        })
+        state: { expense },
+      })
       : this.router.navigate(['/add-expense']);
   }
 
