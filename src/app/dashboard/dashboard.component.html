@@ -1,7 +1,7 @@
 <div class="container">
 
-    <app-simple-card class="card-spacing" title="Current Balance" content="3200 RON" [learnMore]=false></app-simple-card>
-    <app-expense-card style="flex-grow: 2;" class="card-spacing"></app-expense-card>
+    <app-simple-card class="card-spacing" title="Current Balance" content="3200 RON"
+        [learnMore]=false></app-simple-card>
     <app-simple-card class="card-spacing" title="Budget" content="6000 RON" [learnMore]=true></app-simple-card>
 
     <app-latest-transactions-card style="flex-basis: 90%"></app-latest-transactions-card>
@@ -18,7 +18,10 @@
             <button mat-button>Learn More</button>
         </mat-card-actions>
     </mat-card>
-    <app-income-card class="card-spacing" class="card-spacing"></app-income-card>
+    <app-finance-card title="Incomes" [data]="incomeChartDate"/>
+
+    <app-finance-card title="Expenses" [data]="expenseChartData"/>
+    
     <app-simple-card class="card-spacing" title="Savings" content="20500 RON" [learnMore]=false></app-simple-card>
 </div>
 

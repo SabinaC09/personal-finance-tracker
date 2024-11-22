@@ -31,7 +31,7 @@
         <!-- Category Filter -->
         <mat-card>
             <div style="display: flex;flex-direction: column; margin: 10px;">
-                <div>Categories :
+                <div *ngIf="this.categories">Categories :
                     <section style="display: flex; flex-direction: column;">
                         @for (category of categories; track category.name; let i = $index) {
                         <mat-checkbox [(ngModel)]="category.checked">

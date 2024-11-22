@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IncomeCardComponent } from './income-card.component';
+import { IncomeCardComponent } from './finance-card.component';
 
 describe('IncomeCardComponent', () => {
   let component: IncomeCardComponent;

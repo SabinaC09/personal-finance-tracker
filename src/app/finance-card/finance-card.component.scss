@@ -1,0 +1,40 @@
+.expense-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+
+button[mat-raised-button] {
+    flex-shrink: 0;
+}
+
+
+.expense-card {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin: 10px;
+}
+
+form {
+    min-width: 150px;
+    width: 100%;
+}
+
+.backdrop-transparent {
+    background-color: transparent !important;
+}
+
+.button-icon {
+    cursor: pointer !important;
+}
+
+.mat-expansion-panel-header-description {
+    margin-right: 0px;
+    justify-content: flex-end;
+}
+
+.edit-icon {
+    text-align: end;
+}

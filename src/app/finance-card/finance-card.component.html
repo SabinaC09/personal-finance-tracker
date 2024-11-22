@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title>Total expense  
+      <mat-card-title> {{this.title}}  
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Select chart type">
         <mat-icon>more_vert</mat-icon>
     </button></mat-card-title>
@@ -45,7 +45,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button (click)="navigateToExpenseList()" [routerLink]="['/expense-list']">Learn More</button>
+      <button mat-button (click)="navigateToExpenseList()" [routerLink]="[this.navigationRoute]">Learn More</button>
     </mat-card-actions>
   </mat-card>
 </div>
